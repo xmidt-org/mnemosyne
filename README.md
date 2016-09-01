@@ -1,2 +1,2 @@
-# parodus-video
-WebPA client for Video devices
+# mnemosyne
+WebPA Server for mapping between names of devices.
