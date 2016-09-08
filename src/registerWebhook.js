@@ -8,7 +8,7 @@ var options = {
   method: 'POST',
   headers: {
             'content-type': 'application/json',
-            'Authorization': 'Basic d2VicGFfcmVsZWFzZTEuMA=='
+            'Authorization': '<<password>>'
         }
 };
 
