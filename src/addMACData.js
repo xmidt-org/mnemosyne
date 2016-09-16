@@ -1,5 +1,8 @@
 var AWS = require("aws-sdk");
 AWS.config.region = 'us-east-1';
+AWS.config.accessKeyId = '<< access key >>';
+AWS.config.secretAccessKey = '<< secret key >>';
+
 var DOC = require('dynamodb-doc');
 var UUID = require('node-uuid');
 var S = require('string');
