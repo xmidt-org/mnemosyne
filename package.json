@@ -1,0 +1,33 @@
+{
+  "name": "mnemosyne",
+  "version": "1.0.0",
+  "description": "WebPA Server for mapping between names of devices.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gbuddappagari/mnemosyne.git"
+  },
+  "author": "Gayathri Buddappagari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gbuddappagari/mnemosyne/issues"
+  },
+  "homepage": "https://github.com/gbuddappagari/mnemosyne",
+  "devDependencies": {
+    "mocha": "^3.0.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.6.2",
+    "dynamodb-doc": "^1.0.0",
+    "https": "^1.0.0",
+    "lambda-tester": "^2.6.0",
+    "node-uuid": "^1.4.7",
+    "string": "^3.3.1"
+  }
+}
