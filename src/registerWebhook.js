@@ -8,7 +8,7 @@ var options = {
   method: 'POST',
   headers: {
             'content-type': 'application/json',
-            'Authorization': '<<password>>'
+            'Authorization': 'Basic '+process.env.WEBPA_AUTH_HEADER
         }
 };
 
