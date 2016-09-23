@@ -48,6 +48,7 @@ exports.handler = function(event, context, callback) {
                 });
         }
         
+        //deviceId is required input
         if(event.deviceId)
         {
                 if(S(event.deviceId).contains('serial:'))
