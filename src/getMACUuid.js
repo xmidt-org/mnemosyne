@@ -48,12 +48,12 @@ exports.handler = function(event, context, callback) {
                 });
         }
         
-        //deviceId is required input
-        if(event.deviceId)
+        //device_id is required input
+        if(event.device_id)
         {
-                if(S(event.deviceId).contains('serial:'))
+                if(S(event.device_id).contains('serial:'))
                 {
-                        var serialNumber = S(event.deviceId).strip('serial:').s;
+                        var serialNumber = S(event.device_id).strip('serial:').s;
                         var param = {
                                 TableName : serialTable,
                                 Key : { "SerialNumber" : serialNumber }
@@ -88,9 +88,9 @@ exports.handler = function(event, context, callback) {
                         });   
                            
                 }
-                else if(S(event.deviceId).contains('mac:'))
+                else if(S(event.device_id).contains('mac:'))
                 {
-                        mac = S(event.deviceId).strip('mac:').s;
+                        mac = S(event.device_id).strip('mac:').s;
                         getUuid();
                 }
                 else

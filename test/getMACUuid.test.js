@@ -8,7 +8,7 @@ describe( 'getMACUuid Unit Testing', function() {
     it( 'Success', function() {
         
         return LambdaTester( myLambda.handler )
-            .event( { "deviceId": "mac:1122334455" } )
+            .event( { "device_id": "mac:1122334455" } )
             .expectResult();
     });
     
@@ -16,7 +16,7 @@ describe( 'getMACUuid Unit Testing', function() {
     it( 'Success', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "deviceId": "serial:11AABBCCDDEE" } )
+            .event( { "device_id": "serial:11AABBCCDDEE" } )
             .expectResult();
     });
     
@@ -24,7 +24,7 @@ describe( 'getMACUuid Unit Testing', function() {
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "deviceId": "serial:AB12CD23EF3412" } )
+            .event( { "device_id": "serial:AB12CD23EF3412" } )
             .expectError();
     });
     
@@ -32,7 +32,7 @@ describe( 'getMACUuid Unit Testing', function() {
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "deviceId": "mac:123456789" } )
+            .event( { "device_id": "mac:123456789" } )
             .expectError();
     });
     
@@ -48,7 +48,7 @@ describe( 'getMACUuid Unit Testing', function() {
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "deviceId": "mc:1111111111" } )
+            .event( { "device_id": "mc:1111111111" } )
             .expectError();
     });
 
@@ -56,7 +56,7 @@ describe( 'getMACUuid Unit Testing', function() {
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "deviceId": "seal:AAAAAAAAAAAAA" } )
+            .event( { "device_id": "seal:AAAAAAAAAAAAA" } )
             .expectError();
     });
     

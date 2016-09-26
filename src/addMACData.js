@@ -12,14 +12,14 @@ var macTable = 'MAC-MAC-UUID';
 
 exports.handler = function(event, context, callback) 
 {
-        //deviceId and serialNumber are required inputs
-        if(event.deviceId && event.serialNumber)
+        //device_id and serial_number are required inputs
+        if(event.device_id && event.serial_number)
         {
-                var mac = S(event.deviceId).strip('mac:').s;
+                var mac = S(event.device_id).strip('mac:').s;
                 var serialTableParam = {
                         TableName: serialTable,
                         Item : {
-                        'SerialNumber' : event.serialNumber,
+                        'SerialNumber' : event.serial_number,
                         'MAC' : mac
                         }
                 }

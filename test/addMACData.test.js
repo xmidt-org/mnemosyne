@@ -8,43 +8,43 @@ describe( 'addMACData Unit Testing', function() {
     it( 'Success', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "deviceId": "mac:1122334455","serialNumber": "11AABBCCDDEE" } )
+            .event( { "device_id": "mac:1122334455","serial_number": "11AABBCCDDEE" } )
             .expectResult();
     });
     
-    // mismatch in deviceId input
+    // mismatch in device_id input
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "devceId": "mac:1234567891","serialNumber": "ABCDEFABC1234" } )
+            .event( { "devce_id": "mac:1234567891","serial_number": "ABCDEFABC1234" } )
             .expectError();
     });
     
-    // mismatch in serialNumber input
+    // mismatch in serial_number input
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "deviceId": "mac:1a2b3c4d5e","serialNmber": "A1B2C3D4E50321" } )
+            .event( { "device_id": "mac:1a2b3c4d5e","serial_nmber": "A1B2C3D4E50321" } )
             .expectError();
     });
     
-    // without deviceId input
+    // without device_id input
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "serialNumber": "D1B2C3A4E50321" } )
+            .event( { "serial_number": "D1B2C3A4E50321" } )
             .expectError();
     });
     
-    // without serialNumber input
+    // without serial_number input
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "deviceId": "mac:a6542198301" } )
+            .event( { "device_id": "mac:a6542198301" } )
             .expectError();
     });
     
-    // without serialNumber and deviceId
+    // without serial_number and device_id
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
