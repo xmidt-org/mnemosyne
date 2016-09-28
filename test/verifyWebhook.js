@@ -3,23 +3,12 @@ var https = require('https');
 var options = {
   host: 'api-cd.webpa.comcast.net',
   port: 8090,
-  path: '/api/v2/hook',
-  family: 4,
-  method: 'POST',
+  path: '/api/v2/hooks',
+  method: 'GET',
   headers: {
             'content-type': 'application/json',
             'Authorization': 'Basic '+process.env.WEBPA_AUTH_HEADER
         }
-};
-
-var data = {
-  "config": {
-            "url" : "https://9yui64kvxi.execute-api.us-east-1.amazonaws.com/cd/test-post-lambda",
-            "content_type" : "json",
-            "secret" : process.env.SECRET_KEY
-        },
-        
-  "events": [ "node-change/mac:14cfe2142142/.*","SYNC_NOTIFICATION","transaction-status", "device-status" ]
 };
 
 exports.handler = (event, context, callback) => {
@@ -32,11 +21,22 @@ exports.handler = (event, context, callback) => {
             console.log('Successfully processed HTTPS response');
             if (res.headers['content-type'] === 'application/json') {
                 body = JSON.parse(body);
+                for(var i=0; i<body.length; i++)
+                {
+                        if(JSON.stringify(body[i].config) === JSON.stringify(event.config))
+                        {
+                                if(JSON.stringify(body[i].events) === JSON.stringify(event.events))
+                                {
+                                        callback(null, true);
+                                        break;
+                                }
+                                callback(new Error(false));
+                                break;
+                        }
+                }
             }
-            callback(null, body);
         });
     });
     req.on('error', callback);
-    req.write(JSON.stringify(data));
     req.end();
 };

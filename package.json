@@ -23,10 +23,12 @@
   },
   "homepage": "https://github.com/gbuddappagari/mnemosyne",
   "devDependencies": {
+    "chai": "^3.5.0",
     "mocha": "^3.0.2"
   },
   "dependencies": {
     "aws-sdk": "^2.6.2",
+    "crypto": "0.0.3",
     "dynamodb-doc": "^1.0.0",
     "https": "^1.0.0",
     "lambda-tester": "^2.6.0",
