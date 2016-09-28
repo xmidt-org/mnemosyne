@@ -8,7 +8,7 @@ describe( 'getMACUuid Unit Testing', function() {
     it( 'Success', function() {
         
         return LambdaTester( myLambda.handler )
-            .event( { "device_id": "mac:1122334455" } )
+            .event( { "device_id": "mac:1122334455", "authorization": process.env.WEBPA_AUTH_HEADER } )
             .expectResult();
     });
     
@@ -16,15 +16,15 @@ describe( 'getMACUuid Unit Testing', function() {
     it( 'Success', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "device_id": "serial:11AABBCCDDEE" } )
+            .event( { "device_id": "serial:11AABBCCDDEE", "authorization": process.env.WEBPA_AUTH_HEADER } )
             .expectResult();
     });
     
-    //invalid input
+    //invalid authorization header
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "device_id": "serial:AB12CD23EF3412" } )
+            .event( { "device_id": "mac:1122334455", "authorization": "Basic abcd=12eftr" } )
             .expectError();
     });
     
@@ -32,7 +32,15 @@ describe( 'getMACUuid Unit Testing', function() {
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "device_id": "mac:123456789" } )
+            .event( { "device_id": "serial:AB12CD23EF3412", "authorization": process.env.WEBPA_AUTH_HEADER } )
+            .expectError();
+    });
+    
+    //invalid input
+    it( 'Failure', function() {
+
+        return LambdaTester( myLambda.handler )
+            .event( { "device_id": "mac:123456789", "authorization": process.env.WEBPA_AUTH_HEADER } )
             .expectError();
     });
     
@@ -40,7 +48,7 @@ describe( 'getMACUuid Unit Testing', function() {
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "deviId": "mac:1242135682" } )
+            .event( { "devi_id": "mac:124213568", "authorization": process.env.WEBPA_AUTH_HEADER } )
             .expectError();
     });
     
@@ -48,7 +56,7 @@ describe( 'getMACUuid Unit Testing', function() {
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "device_id": "mc:1111111111" } )
+            .event( { "device_id": "mc:111111111", "authorization": process.env.WEBPA_AUTH_HEADER } )
             .expectError();
     });
 
@@ -56,7 +64,7 @@ describe( 'getMACUuid Unit Testing', function() {
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( { "device_id": "seal:AAAAAAAAAAAAA" } )
+            .event( { "device_id": "seal:AAAAAAAAAAAA", "authorization": process.env.WEBPA_AUTH_HEADER } )
             .expectError();
     });
     
@@ -64,7 +72,7 @@ describe( 'getMACUuid Unit Testing', function() {
     it( 'Failure', function() {
 
         return LambdaTester( myLambda.handler )
-            .event( {} )
+            .event( {"authorization": process.env.WEBPA_AUTH_HEADER} )
             .expectError();
     });
     
