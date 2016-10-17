@@ -1,0 +1,256 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description":"Mnemosyne is a WebPA Server for mapping between different id's of devices like CM MAC, SerialNumber and UUID.",
+    "version": "1.0.0",
+    "title": "Mnemosyne"
+  },
+  "host": "9yui64kvxi.execute-api.us-east-1.amazonaws.com",
+  "basePath": "/cd/test-post-lambda",
+  "schemes": [
+    "https"
+  ],
+  "tags": [
+    {
+      "name": "mnemosyne",
+      "description": "Everything about mnemosyne"
+    }
+  ],
+  "paths": {
+    "/": {
+      "post": {
+        "tags": [
+          "mnemosyne"
+        ],
+        "summary": "Add device data",
+        "description": "This method is used to add device data such as device_id and serial_number to database.",
+        "operationId": "addMACData",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "X-Webpa-Signature",
+            "in": "header",
+            "description" : "HMAC hex digest of the body using secret as the key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Device",
+            "required": true,
+            "description" : "Device details",
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            ".*\"InternalServerError\".*": {
+              "statusCode": "500",
+              "responseTemplates": {
+                "application/json": "#set ($message = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"type\" : \"$message.code\",\n  \"message\" : \"$message.message\"\n}"
+              }
+            },
+            ".*\"BadRequest\".*": {
+              "statusCode": "400",
+              "responseTemplates": {
+                "application/json": "#set ($message = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"type\" : \"$message.code\",\n  \"message\" : \"$message.message\"\n}"
+              }
+            },
+            "default": {
+              "statusCode": "200"
+            },
+            ".*\"AuthenticationError\".*": {
+              "statusCode": "403",
+              
+              "responseTemplates": {
+                "application/json": "#set ($message = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"type\" : \"$message.code\",\n  \"message\" : \"$message.message\"\n}"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\n    \"body\" : $input.json('$'),\n    \"signature\": \"$input.params().header.get(\"x-webpa-signature\")\"\n}"
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:801199994599:function:addMACData/invocations",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
+          "type": "aws"
+        }
+      }
+    },
+    "/{device_id}": {
+      "get": {
+        "tags": [
+          "mnemosyne"
+        ],
+        "summary": "Get MAC UUID",
+        "description": "This method is used to get MAC_UUID from dynamodb. device_id can be either macId or serialNumber. This can be differentiated by using mac: and serial:",
+        "operationId": "getMACUuid",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "description" : "macId (ex:- mac:12345) or serialNumber (ex:- serial:abcd)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description" : "Authorization key",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "520": {
+            "description": "Unknown Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            },
+            ".*Unknown.*": {
+              "statusCode": "520",
+              "responseTemplates": {
+                "application/json": "#set ($message = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"type\" : \"$message.code\",\n  \"message\" : \"$message.message\"\n}"
+              }
+            },
+            ".*\"AuthenticationError\".*": {
+              "statusCode": "403",
+              "responseTemplates": {
+                "application/json": "#set ($message = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"type\" : \"$message.code\",\n  \"message\" : \"$message.message\"\n}"
+              }
+            },
+            ".*Bad.*": {
+              "statusCode": "400",
+              "responseTemplates": {
+                "application/json": "#set ($message = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"type\" : \"$message.code\",\n  \"message\" : \"$message.message\"\n}"
+              }
+            },
+            ".*Found.*": {
+              "statusCode": "404",
+              "responseTemplates": {
+                "application/json": "#set ($message = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"type\" : \"$message.code\",\n  \"message\" : \"$message.message\"\n}"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\n\"device_id\" : \"$input.params('device_id')\",\n\"authorization\": \"$input.params().header.get(\"Authorization\")\"\n}"
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:801199994599:function:getMACUuid/invocations",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
+          "type": "aws"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Response": {
+      "type": "object",
+      "properties": {
+        "MAC_UUID": {
+          "type": "string"
+        }
+      },
+      "title": "Response"
+    },
+    "Empty": {
+      "type": "object",
+      "title": "Empty Schema"
+    },
+    "Device": {
+      "type": "object",
+      "properties": {
+        "device_id": {
+          "type": "string"
+        },
+        "serial_number": {
+          "type": "string"
+        }
+      },
+      "title": "Device"
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "Error"
+    }
+  }
+}
