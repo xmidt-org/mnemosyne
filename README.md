@@ -1,9 +1,14 @@
 # mnemosyne
 WebPA Server for mapping between names of devices.
 
-[![Build Status](https://travis-ci.org/Comcast/mnemosyne.svg?branch=master)](https://travis-ci.org/Comcast/mnemosyne)
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+[![Apache V2 License](http://img.shields.io/badge/license-Apache%20V2-blue.svg)](https://github.com/xmidt-org/mnemosyne/blob/master/LICENSE)
 
-# Building and Testing Instructions
+## Archived
+
+This project has been archived.  No future work will be done here.
+
+## Building and Testing Instructions
 
 ```
 
