@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gbuddappagari/mnemosyne.git"
+    "url": "https://github.com/Comcast/mnemosyne.git"
   },
   "author": "Gayathri Buddappagari",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/gbuddappagari/mnemosyne/issues"
+    "url": "https://github.com/Comcast/mnemosyne/issues"
   },
-  "homepage": "https://github.com/gbuddappagari/mnemosyne",
+  "homepage": "https://github.com/Comcast/mnemosyne",
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.0.2"
